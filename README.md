@@ -1,6 +1,6 @@
 # MLhackathon
 Notebook for the ML hackathon   
-SRN : PES1UG23AM097 , PES1UG23AM106 , PES1UG23AM095 , PES1UG23AM106  
+SRN : PES1UG23AM097 , PES1UG23AM106 , PES1UG23AM095 , PES1UG23AM089 
 Name: Dhanush shetty , Gaurav Kothari , Devash Tiwary , Chirayu M
 
 # Intelligent Hangman Assistant (HMM + Q-Learning)
