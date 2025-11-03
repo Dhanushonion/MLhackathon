@@ -1,11 +1,12 @@
 # MLhackathon
 Notebook for the ML hackathon 
+SRN : PES1UG23AM097 , PES1UG23AM106 , PES1UG23AM095 , PES1UG23AM106
 
 # Intelligent Hangman Assistant (HMM + Q-Learning)
 
-This project implements an intelligent agent that learns to play the game of Hangman. The agent's "brain" is a hybrid model that combines a statistical **Hidden Markov Model (HMM)** with a **Q-Learning Reinforcement Learning (RL) agent**.
+This project implements an intelligent agent that learns to play the game of Hangman. it is hybrid model that combines a statistical **Hidden Markov Model (HMM)** with a **Q-Learning Reinforcement Learning (RL) agent**.
 
-The HMM provides a strong statistical "prior" by analyzing the structure of English, while the Q-Learning agent learns from game-playing experience to correct the HMM's general advice with specific, state-based knowledge.
+The HMM provides a strong statistical basis by analyzing the structure of English, while the Q-Learning agent learns from game-playing experience to correct the HMM's general advice with specific, state-based knowledge.
 
 ## Project Structure
 
@@ -41,7 +42,7 @@ The project is contained within the `final.ipynb` notebook and is built around f
     * **Wrong Guess:** `-10` (Stronger penalty to discourage guessing)
     * **Repeated Guess:** `-2` (Small penalty to ensure efficiency)
 
-### QLearningAgent (The "Brain")
+### QLearningAgent 
 
 * **Why Q-Learning?** Q-Learning is a tabular RL method that learns a "Q-value" for every `(state, action)` pair. This allows the agent to learn from experience. It can, for example, learn that while the HMM suggests 'E' for `_ _ _ _ E`, if it has already guessed 'E' and was wrong, it must override the HMM.
 * **State Representation:**
@@ -82,6 +83,8 @@ The **0 repeated guesses** show that the `-2` reward penalty was 100% effective.
 
 
 The win rate varies significantly by word length, suggesting the HMM's statistical models are stronger for certain lengths.
+Keep in mind that test set WAS NOT USED to train the model , that will lead to 90%+ rise in accuracy but it is not the right approach.
+The maximum achievable accuracy through this implementation is around 35%~ because of the nature of the datasets.
 
 ### Why not a Deep Q-Network (DQN)?
 
@@ -89,8 +92,8 @@ A DQN, which uses a neural network to *approximate* the Q-function, was also pro
 
 * **The Theory:** A DQN *should* be superior because it can **generalize** across similar states. A tabular Q-table treats `A_PLE:B,C:5` and `A_PLE:K,D:5` as two completely different, unrelated states. A DQN could recognize their similarity and apply learned knowledge from one to the other.
 
-* **The Reality:** In this project, the DQN's performance was *lower* than the tabular Q-Learning agent. The reason is the **nature and scale of the dataset**.
-    1.  **Limited Training Data:** 5,000 episodes is a very small number for training a deep neural network. The DQN did not have enough data to learn the complex patterns and likely failed to converge.
+* **The Reality:** In this project, the DQN's performance was *lower* than the tabular Q-Learning agent. The reason is the **nature and scale of the dataset**. the datasetst hve very less overlap.
+    1.  **Limited Training Data:** 5,000 episodes is a very small number for training a deep neural network. The DQN did not have enough data to learn the complex patterns and likely failed to converge. also training more than 20,000 episodes requires considerable training time.
     2.  **Sparsity vs. Memorization:** The tabular method, while suffering from state-space sparsity, was able to *memorize* the Q-values for the few common states it encountered. The DQN, trying to find a general function, struggled to do even this with the limited data.
 
 Given more time and compute (e.g., 100,000+ training episodes), the DQN would almost certainly learn a superior policy and surpass the tabular agent.
@@ -99,7 +102,7 @@ Given more time and compute (e.g., 100,000+ training episodes), the DQN would al
 
 ## 3. Future Improvements
 
-If I had another week, I would focus on overcoming the state-space limitation:
+If I had another week, I would focus on overcoming :
 
 1.  **Massively Scale DQN Training:** Train the DQN for 100,000 to 500,000 episodes to allow the network to converge properly.
 2.  **HMM as a Feature:** Feed the 26-value probability vector from the HMM *directly into the DQN* as part of the state. This would allow the network to learn *how much to trust* the HMM's advice, rather than using a fixed 60/40 split.
